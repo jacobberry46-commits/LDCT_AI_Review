@@ -1,0 +1,26 @@
+library(mada)
+
+mydata <- data.frame(
+  TP = c(146, 88, 1395, 381, 54, 306, 417, 356),
+  FN = c(4, 19, 95, 58, 11, 48, 33, 75),
+  FP = c(224, 296, 10, 71, 82, 46, 21, 65),
+  TN = c(173, 2959, 621, 369, 736, 308, 533, 730)
+)
+
+reitsma_model <- reitsma(mydata)
+
+plot(reitsma_model,
+     main = "Summary ROC",
+     sroclwd = 2,
+     ci = TRUE,
+     cilty = 2,
+     xlim = c(0, 0.8), ylim = c(0.6, 1))
+
+grid_positions <- seq(0, 1, by = 0.1)
+abline(h = grid_positions, v = grid_positions, col = "gray", lty = 2)
+
+sens <- mydata$TP / (mydata$TP + mydata$FN)
+spec <- mydata$TN / (mydata$TN + mydata$FP)
+points(1 - spec, sens, pch = 19, col = "blue")
+
+

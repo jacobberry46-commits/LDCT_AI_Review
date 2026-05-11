@@ -1,0 +1,29 @@
+auc_data <- data.frame(
+  Study = c("Wang et al. (2024)", "Warkentin et al. (2024)", "Resham et al. (2023)", "Huang et al. (2023)", "Shao et al. (2022)", "Venkadesh et al. (2021)", "Masquelin et al. (2021)", "Zhao et al. (2020)", "Li et al. (2020)", "Choi et al. (2018)", "Astaraki et al. (2021)"),
+  AUC = c(0.88, 0.93, 0.9623, 0.9042, 0.9634, 0.93, 0.9393, 0.979, 0.9306, 0.89, 0.936),
+  CI_lower = c(0.85, 0.90, 0.9550, 0.8834, 0.9328, 0.89, 0.9210, 0.9695, 0.9138, 0.8880, 0.921),
+  CI_upper = c(0.91, 0.96, 0.9696, 0.9221, 0.9906, 0.96, 0.9576, 0.9885, 0.9474, 0.8920, 0.950)
+)
+
+auc_data$SE <- (auc_data$CI_upper - auc_data$CI_lower) / (2 * 1.96)
+
+install.packages("metafor")  
+library(metafor)
+
+rma_auc <- rma(yi = AUC, sei = SE, data = auc_data, method = "REML")
+
+summary(rma_auc)
+
+rma_auc <- rma(yi = AUC, sei = SE, data = auc_data, method = "REML")
+
+metafor::forest(rma_auc,
+       slab = auc_data$Study,
+       xlab = "AUC",
+alim= c(0.80, 1.00),
+       digits = 4)
+abline(v = 0.9319, col = "red", lwd = 1, lty = 3)
+
+
+
+
+

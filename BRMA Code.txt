@@ -1,0 +1,17 @@
+
+ library(mada)
+ 
+
+ mydata <- data.frame(
+   TP = c(146, 88, 1395, 381, 54, 306, 417, 356),
+   FN = c(4, 19, 95, 58, 11, 48, 33, 75),
+   FP = c(224, 296, 10, 71, 82, 46, 21, 65),
+   TN = c(173, 2959, 621, 369, 736, 308, 533, 730)
+ )
+ 
+ reitsma_model <- reitsma(mydata)
+ 
+
+ summary(reitsma_model)
+
+
